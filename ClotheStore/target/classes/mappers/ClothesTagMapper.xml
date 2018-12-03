@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.ClothesTagMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.ClothesTag">
+    <id column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <result column="kind_id" jdbcType="INTEGER" property="kindId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clothes_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.ClothesTag">
+    insert into clothes_tag (tag_id, tag_name, kind_id
+      )
+    values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{kindId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.ClothesTag">
+    update clothes_tag
+    set tag_name = #{tagName,jdbcType=VARCHAR},
+      kind_id = #{kindId,jdbcType=INTEGER}
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select tag_id, tag_name, kind_id
+    from clothes_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select tag_id, tag_name, kind_id
+    from clothes_tag
+  </select>
+</mapper>

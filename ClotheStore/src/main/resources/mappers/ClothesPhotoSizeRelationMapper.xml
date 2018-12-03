@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.ClothesPhotoSizeRelationMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.ClothesPhotoSizeRelation">
+    <id column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="relation_clothes_id" jdbcType="INTEGER" property="relationClothesId" />
+    <result column="relation_photo_id" jdbcType="INTEGER" property="relationPhotoId" />
+    <result column="realtion_size_id" jdbcType="INTEGER" property="realtionSizeId" />
+    <result column="clothes_count" jdbcType="INTEGER" property="clothesCount" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clothes_photo_size_relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.ClothesPhotoSizeRelation">
+    insert into clothes_photo_size_relation (relation_id, relation_clothes_id, relation_photo_id, 
+      realtion_size_id, clothes_count)
+    values (#{relationId,jdbcType=INTEGER}, #{relationClothesId,jdbcType=INTEGER}, #{relationPhotoId,jdbcType=INTEGER}, 
+      #{realtionSizeId,jdbcType=INTEGER}, #{clothesCount,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.ClothesPhotoSizeRelation">
+    update clothes_photo_size_relation
+    set relation_clothes_id = #{relationClothesId,jdbcType=INTEGER},
+      relation_photo_id = #{relationPhotoId,jdbcType=INTEGER},
+      realtion_size_id = #{realtionSizeId,jdbcType=INTEGER},
+      clothes_count = #{clothesCount,jdbcType=INTEGER}
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select relation_id, relation_clothes_id, relation_photo_id, realtion_size_id, clothes_count
+    from clothes_photo_size_relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select relation_id, relation_clothes_id, relation_photo_id, realtion_size_id, clothes_count
+    from clothes_photo_size_relation
+  </select>
+</mapper>

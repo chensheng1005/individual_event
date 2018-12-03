@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.EvaluationMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.Evaluation">
+    <id column="evaluation_id" jdbcType="INTEGER" property="evaluationId" />
+    <result column="evaluation_good_poor" jdbcType="VARCHAR" property="evaluationGoodPoor" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from evaluation
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.Evaluation">
+    insert into evaluation (evaluation_id, evaluation_good_poor)
+    values (#{evaluationId,jdbcType=INTEGER}, #{evaluationGoodPoor,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.Evaluation">
+    update evaluation
+    set evaluation_good_poor = #{evaluationGoodPoor,jdbcType=VARCHAR}
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select evaluation_id, evaluation_good_poor
+    from evaluation
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select evaluation_id, evaluation_good_poor
+    from evaluation
+  </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.ClothesInformationMapper">
+    <resultMap id="BaseResultMap" type="com.cs.entity.ClothesInformation">
+        <id column="clothes_id" jdbcType="INTEGER" property="clothesId"/>
+        <result column="clothes_describe" jdbcType="VARCHAR" property="clothesDescribe"/>
+        <result column="clothes_price" jdbcType="DECIMAL" property="clothesPrice"/>
+        <result column="clothes_img" jdbcType="VARCHAR" property="clothesImg" />
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="clothes_count" jdbcType="INTEGER" property="clothesCount"/>
+    </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+      select clothes_id,clothes_describe,clothes_price,brand_name,tag_name,COALESCE(sum(clothes_count),0) as clothes_count,clothes_img from clothes c
+        inner join clothes_brand b
+        on c.brand_id = b.brand_id
+        inner join clothes_tag g
+        on c.tag_id = g.tag_id
+        left join clothes_photo_size_relation s
+        on c.clothes_id = s.relation_clothes_id group by c.clothes_id;
+    </select>
+</mapper>

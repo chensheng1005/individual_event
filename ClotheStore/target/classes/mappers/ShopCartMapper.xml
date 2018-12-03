@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.ShopCartMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.ShopCart">
+    <id column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="shop_user_account_number" jdbcType="VARCHAR" property="shopUserAccountNumber" />
+    <result column="shop_order" jdbcType="INTEGER" property="shopOrder" />
+    <result column="shop_state" jdbcType="INTEGER" property="shopState" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shop_cart
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.ShopCart">
+    insert into shop_cart (shop_id, relation_id, shop_user_account_number, 
+      shop_order, shop_state)
+    values (#{shopId,jdbcType=INTEGER}, #{relationId,jdbcType=INTEGER}, #{shopUserAccountNumber,jdbcType=VARCHAR}, 
+      #{shopOrder,jdbcType=INTEGER}, #{shopState,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.ShopCart">
+    update shop_cart
+    set relation_id = #{relationId,jdbcType=INTEGER},
+      shop_user_account_number = #{shopUserAccountNumber,jdbcType=VARCHAR},
+      shop_order = #{shopOrder,jdbcType=INTEGER},
+      shop_state = #{shopState,jdbcType=INTEGER}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select shop_id, relation_id, shop_user_account_number, shop_order, shop_state
+    from shop_cart
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select shop_id, relation_id, shop_user_account_number, shop_order, shop_state
+    from shop_cart
+  </select>
+</mapper>

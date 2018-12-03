@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.ClothesBrandMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.ClothesBrand">
+    <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clothes_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.ClothesBrand">
+    insert into clothes_brand (brand_id, brand_name)
+    values (#{brandId,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.ClothesBrand">
+    update clothes_brand
+    set brand_name = #{brandName,jdbcType=VARCHAR}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select brand_id, brand_name
+    from clothes_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select brand_id, brand_name
+    from clothes_brand
+  </select>
+</mapper>

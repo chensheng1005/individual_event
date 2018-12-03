@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.ClothesMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.Clothes">
+    <id column="clothes_id" jdbcType="INTEGER" property="clothesId" />
+    <result column="clothes_describe" jdbcType="VARCHAR" property="clothesDescribe" />
+    <result column="clothes_price" jdbcType="DECIMAL" property="clothesPrice" />
+    <result column="clothes_img" jdbcType="VARCHAR" property="clothesImg" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="tag_id" jdbcType="INTEGER" property="tagId" />
+
+    <collection property="clothesBrand" resultMap="ClothesBrandResultMap"></collection>
+    <collection property="clothesSize" resultMap="ClothesSizeResultMap"></collection>
+    <collection property="clothesPhoto" resultMap="ClothesPhotoResultMap"></collection>
+    <collection property="clothesPhotoSizeRelation" resultMap="ClothesPhotoSizeRelationResultMap"></collection>
+  </resultMap>
+
+  <resultMap id="ClothesBrandResultMap" type="com.cs.entity.ClothesBrand">
+    <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+  </resultMap>
+
+  <resultMap id="ClothesSizeResultMap" type="com.cs.entity.ClothesSize">
+    <id column="size_id" jdbcType="INTEGER" property="sizeId" />
+    <result column="size_name" jdbcType="VARCHAR" property="sizeName" />
+  </resultMap>
+
+  <resultMap id="ClothesPhotoResultMap" type="com.cs.entity.ClothesPhoto">
+    <id column="photo_id" jdbcType="INTEGER" property="photoId" />
+    <result column="photo_name" jdbcType="VARCHAR" property="photoName" />
+    <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
+  </resultMap>
+
+  <resultMap id="ClothesPhotoSizeRelationResultMap" type="com.cs.entity.ClothesPhotoSizeRelation">
+    <id column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="relation_clothes_id" jdbcType="INTEGER" property="relationClothesId" />
+    <result column="relation_photo_id" jdbcType="INTEGER" property="relationPhotoId" />
+    <result column="realtion_size_id" jdbcType="INTEGER" property="realtionSizeId" />
+    <result column="clothes_count" jdbcType="INTEGER" property="clothesCount" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clothes
+    where clothes_id = #{clothesId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.Clothes">
+    insert into clothes (clothes_id, clothes_describe, clothes_price, 
+      clothes_img, brand_id, tag_id
+      )
+    values (#{clothesId,jdbcType=INTEGER}, #{clothesDescribe,jdbcType=VARCHAR}, #{clothesPrice,jdbcType=DECIMAL}, 
+      #{clothesImg,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.Clothes">
+    update clothes
+    set clothes_describe = #{clothesDescribe,jdbcType=VARCHAR},
+      clothes_price = #{clothesPrice,jdbcType=DECIMAL},
+      clothes_img = #{clothesImg,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      tag_id = #{tagId,jdbcType=INTEGER}
+    where clothes_id = #{clothesId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select clothes_id, clothes_describe, clothes_price, clothes_img, brand_id, tag_id
+    from clothes
+    where clothes_id = #{clothesId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+   select clothes_id, clothes_describe, clothes_price, clothes_img, brand_id, tag_id
+    from clothes
+  </select>
+
+  <select id="selectAllPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from clothes l
+    inner join clothes_photo_size_relation r
+    on l.clothes_id = r.relation_clothes_id
+    inner join clothes_photo c
+    on c.photo_id = relation_photo_id
+    inner join clothes_size s
+    on s.size_id = r.realtion_size_id
+    inner join clothes_brand b
+    on b.brand_id = l.brand_id
+    where l.clothes_id = #{clothesId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.dao.RecipientMapper">
+  <resultMap id="BaseResultMap" type="com.cs.entity.Recipient">
+    <id column="recipient_id" jdbcType="INTEGER" property="recipientId" />
+    <result column="recipient_user_account_number" jdbcType="VARCHAR" property="recipientUserAccountNumber" />
+    <result column="recipient_person" jdbcType="VARCHAR" property="recipientPerson" />
+    <result column="recipient_address" jdbcType="VARCHAR" property="recipientAddress" />
+    <result column="recipient_person_phone" jdbcType="VARCHAR" property="recipientPersonPhone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recipient
+    where recipient_id = #{recipientId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cs.entity.Recipient">
+    insert into recipient (recipient_id, recipient_user_account_number, 
+      recipient_person, recipient_address, recipient_person_phone
+      )
+    values (#{recipientId,jdbcType=INTEGER}, #{recipientUserAccountNumber,jdbcType=VARCHAR}, 
+      #{recipientPerson,jdbcType=VARCHAR}, #{recipientAddress,jdbcType=VARCHAR}, #{recipientPersonPhone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cs.entity.Recipient">
+    update recipient
+    set recipient_user_account_number = #{recipientUserAccountNumber,jdbcType=VARCHAR},
+      recipient_person = #{recipientPerson,jdbcType=VARCHAR},
+      recipient_address = #{recipientAddress,jdbcType=VARCHAR},
+      recipient_person_phone = #{recipientPersonPhone,jdbcType=VARCHAR}
+    where recipient_id = #{recipientId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select recipient_id, recipient_user_account_number, recipient_person, recipient_address, 
+    recipient_person_phone
+    from recipient
+    where recipient_id = #{recipientId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select recipient_id, recipient_user_account_number, recipient_person, recipient_address, 
+    recipient_person_phone
+    from recipient
+  </select>
+</mapper>
